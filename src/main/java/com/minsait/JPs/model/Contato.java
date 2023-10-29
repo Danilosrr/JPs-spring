@@ -15,7 +15,25 @@ public class Contato {
     @Column(nullable = false)
     private EnumContatoTipo contatoTipo;
 
-    //manytoone
+    public Long getId() {
+        return id;
+    }
+
+    public String getContato() {
+        return contato;
+    }
+
+    public EnumContatoTipo getContatoTipo() {
+        return contatoTipo;
+    }
+
+    public void setContato(String contato) {
+        this.contato = contato;
+    }
+
+    public void setContatoTipo(EnumContatoTipo contatoTipo) {
+        this.contatoTipo = contatoTipo;
+    }
 }
 
 enum EnumContatoTipo {
