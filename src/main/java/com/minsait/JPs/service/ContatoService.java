@@ -37,6 +37,7 @@ public class ContatoService implements ContatoServiceInterface {
             Contato newContato = upContato.get();
             newContato.setContato(contato.getContato());
             newContato.setContatoTipo(contato.getContatoTipo());
+            newContato.setPessoa_id(contato.getPessoa_id());
             return contatoRepository.save(newContato);
         }
         return contato;
