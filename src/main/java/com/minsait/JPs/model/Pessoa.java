@@ -32,6 +32,34 @@ public class Pessoa {
     @JoinColumn(name = "pc_fk",referencedColumnName = "id")
     List<Contato> contatos;
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getEndereco() {
+        return endereco;
+    }
+
+    public String getCep() {
+        return cep;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public String getUf() {
+        return uf;
+    }
+
+    public List<Contato> getContatos() {
+        return contatos;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
