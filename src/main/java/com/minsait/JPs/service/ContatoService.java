@@ -1,6 +1,7 @@
 package com.minsait.JPs.service;
 
 import com.minsait.JPs.model.Contato;
+import com.minsait.JPs.model.Pessoa;
 import com.minsait.JPs.repository.ContatoRepository;
 import com.minsait.JPs.service.interfaces.ContatoServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ public class ContatoService implements ContatoServiceInterface {
     public ContatoService(ContatoRepository contatoRepository){ this.contatoRepository = contatoRepository; }
 
     @Override
-    public Contato save(Contato contato) {
+    public Contato saveContatoToPessoa(Pessoa pessoa, Contato contato) {
+        contato.setPessoa_id(pessoa.getId());
         return contatoRepository.save(contato);
     }
 

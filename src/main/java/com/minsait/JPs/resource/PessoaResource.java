@@ -38,9 +38,11 @@ public class PessoaResource {
     @PostMapping
     public ResponseEntity<Pessoa> savePessoa(@RequestBody Pessoa pessoa){
         Pessoa newPessoa = pessoaService.save(pessoa);
-        if(newPessoa == null)
+        if(newPessoa == null) {
             return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(newPessoa);
+        } else {
+            return ResponseEntity.ok(newPessoa);
+        }
     };
 
     @DeleteMapping("/{id}")
@@ -79,8 +81,7 @@ public class PessoaResource {
         Optional<Pessoa> pessoa = pessoaService.getById(id);
 
         if (pessoa.isPresent()) {
-            contato.setPessoa_id(pessoa.get().getId());
-            contatoService.save(contato);
+            contatoService.saveContatoToPessoa(pessoa.get(), contato);
             return ResponseEntity.ok(contato);
         } else {
             return ResponseEntity.notFound().build();
