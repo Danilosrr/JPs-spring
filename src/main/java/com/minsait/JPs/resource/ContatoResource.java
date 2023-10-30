@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/contato")
+@RequestMapping("/api/contatos")
 public class ContatoResource {
     private ContatoService contatoService;
     private PessoaService pessoaService;
@@ -28,15 +28,19 @@ public class ContatoResource {
         return ResponseEntity.ok(contatos);
     };
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Contato> save(@RequestBody Contato contato, @PathVariable Long id){
-        Optional<Pessoa> pessoa = pessoaService.getById(id);
+    @PutMapping("/{id}")
+    public ResponseEntity<Contato> updateContato(@PathVariable Long id, @RequestBody Contato contato){
+        Contato upContato = contatoService.update(id,contato);
+        return ResponseEntity.ok(upContato);
+    };
 
-        if (pessoa.isPresent()) {
-            contato.setPessoa_id(pessoa.get().getId());
-            contatoService.save(contato);
-            return ResponseEntity.ok(contato);
-        } else {
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Contato> deleteContato(@PathVariable Long id){
+        Optional<Contato> contato = contatoService.getById(id);
+        if(contato.isPresent()) {
+            contatoService.delete(id);
+            return ResponseEntity.ok().build();
+        }else {
             return ResponseEntity.notFound().build();
         }
     };

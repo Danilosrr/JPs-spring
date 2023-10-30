@@ -9,25 +9,81 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/pessoa")
+@RequestMapping("/api/pessoas")
 public class PessoaResource {
     private PessoaService pessoaService;
+    private ContatoService contatoService;
 
     @Autowired
-    public PessoaResource(PessoaService pessoaService) { this.pessoaService = pessoaService; }
+    public PessoaResource(PessoaService pessoaService, ContatoService contatoService) {
+        this.pessoaService = pessoaService;
+        this.contatoService = contatoService;
+    };
+
     @GetMapping
     public ResponseEntity<List<Pessoa>> getAll(){
         List<Pessoa> pessoas = pessoaService.getAll();
         return ResponseEntity.ok(pessoas);
     };
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Pessoa> updatePessoa(@PathVariable Long id, @RequestBody Pessoa pessoa){
+        Pessoa upPessoa = pessoaService.update(id, pessoa);
+        return ResponseEntity.ok(upPessoa);
+    };
+
     @PostMapping
-    public ResponseEntity<Pessoa> save(@RequestBody Pessoa pessoa){
+    public ResponseEntity<Pessoa> savePessoa(@RequestBody Pessoa pessoa){
         Pessoa newPessoa = pessoaService.save(pessoa);
         if(newPessoa == null)
             return ResponseEntity.notFound().build();
         return ResponseEntity.ok(newPessoa);
-    }
+    };
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Pessoa> deletePessoa(@PathVariable Long id){
+        Optional<Pessoa> pessoa = pessoaService.getById(id);
+        if(pessoa.isPresent()) {
+            pessoaService.delete(id);
+            return ResponseEntity.ok().build();
+        }else {
+            return ResponseEntity.notFound().build();
+        }
+    };
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Pessoa> getPessoaById(@PathVariable Long id){
+        Optional<Pessoa> pessoa = pessoaService.getById(id);
+        if(pessoa.isPresent()) {
+            return ResponseEntity.ok(pessoa.get());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    };
+
+    @GetMapping("/{idPessoa}/contatos")
+    public ResponseEntity<List<Contato>> getContatosById(@PathVariable Long idPessoa){
+        Optional<Pessoa> pessoa = pessoaService.getById(idPessoa);
+        if(pessoa.isPresent()) {
+            return ResponseEntity.ok(pessoa.get().getContatos());
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    };
+
+    @PostMapping("/{id}/contatos")
+    public ResponseEntity<Contato> savePessoaContato(@RequestBody Contato contato, @PathVariable Long id){
+        Optional<Pessoa> pessoa = pessoaService.getById(id);
+
+        if (pessoa.isPresent()) {
+            contato.setPessoa_id(pessoa.get().getId());
+            contatoService.save(contato);
+            return ResponseEntity.ok(contato);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    };
 }

@@ -30,14 +30,13 @@ public class ContatoService implements ContatoServiceInterface {
     }
 
     @Override
-    public Contato update(Contato contato) {
-        Optional<Contato> upContato = contatoRepository.findById(contato.getId());
+    public Contato update(Long id, Contato contato) {
+        Optional<Contato> upContato = contatoRepository.findById(id);
 
         if(upContato.isPresent()) {
             Contato newContato = upContato.get();
             newContato.setContato(contato.getContato());
             newContato.setContatoTipo(contato.getContatoTipo());
-            newContato.setPessoa_id(contato.getPessoa_id());
             return contatoRepository.save(newContato);
         }
         return contato;

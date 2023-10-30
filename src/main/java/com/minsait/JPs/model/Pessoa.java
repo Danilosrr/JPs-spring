@@ -23,7 +23,7 @@ public class Pessoa {
     private String cidade;
     @Column()
     private String uf;
-    @OneToMany
+    @OneToMany (cascade = CascadeType.ALL)
     @JoinColumn(name = "pessoa_id")
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     List<Contato> contatos = new ArrayList<Contato>();
