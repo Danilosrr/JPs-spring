@@ -1,7 +1,7 @@
+<div>
+  <img src="./src/main/resources/images/logotipo_minsait.jpg" alt="Minsait Logo" height="150px">
+</div>
 
-Este README fornece instruções sobre como executar uma aplicação Spring Boot que usa MySQL e Swagger.
-
-<br/>
 
 ### Requisitos
 
