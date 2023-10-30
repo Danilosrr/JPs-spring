@@ -2,8 +2,12 @@ package com.minsait.JPs.model;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.validation.annotation.Validated;
 
 @Entity
+@Validated
 @Table(name = "contatos")
 public class Contato {
     @Id
@@ -13,14 +17,15 @@ public class Contato {
     @Schema(accessMode = Schema.AccessMode.READ_ONLY)
     private Long pessoa_id;
     @Column(nullable = false)
+    @NotEmpty(message = "contato é um campo obrigatório")
     private String contato;
     @Column(nullable = false)
+    @NotNull(message = "contatoTipo é um campo obrigatório")
     private EnumContatoTipo contatoTipo;
 
     public Long getId() {
         return id;
     }
-
     public Long getPessoa_id() { return pessoa_id; }
     public String getContato() {
         return contato;

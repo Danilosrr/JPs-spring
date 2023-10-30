@@ -1,9 +1,9 @@
 package com.minsait.JPs.service;
 
 import com.minsait.JPs.model.Pessoa;
-import com.minsait.JPs.repository.ContatoRepository;
 import com.minsait.JPs.repository.PessoaRepository;
 import com.minsait.JPs.service.interfaces.PessoaServiceInterface;
+import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +13,12 @@ import java.util.Optional;
 @Service
 public class PessoaService implements PessoaServiceInterface {
     private PessoaRepository pessoaRepository;
-    private ContatoRepository contatoRepository;
 
     @Autowired
-    public PessoaService(PessoaRepository pessoaRepository, ContatoRepository contatoRepository){
-        this.pessoaRepository = pessoaRepository; this.contatoRepository = contatoRepository;
+    private Validator validator;
+    @Autowired
+    public PessoaService(PessoaRepository pessoaRepository){
+        this.pessoaRepository = pessoaRepository;
     }
 
     @Override

@@ -3,9 +3,9 @@ package com.minsait.JPs.dto;
 import com.minsait.JPs.model.Pessoa;
 
 public class PessoaDTO {
-    private  Long id;
-    private String nome;
-    private String malaDireta;
+    private  final Long id;
+    private final String nome;
+    private final String malaDireta;
 
     public PessoaDTO(Pessoa pessoa){
         this.id = pessoa.getId();

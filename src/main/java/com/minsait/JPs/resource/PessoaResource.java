@@ -6,6 +6,7 @@ import com.minsait.JPs.model.Pessoa;
 import com.minsait.JPs.service.ContatoService;
 import com.minsait.JPs.service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class PessoaResource {
 
     @Operation(summary = "Registrar pessoa", description = "Registra uma nova pessoa na aplicação.")
     @PostMapping
-    public ResponseEntity<Pessoa> savePessoa(@RequestBody Pessoa pessoa){
+    public ResponseEntity<Pessoa> savePessoa(@Valid @RequestBody Pessoa pessoa){
         Pessoa newPessoa = pessoaService.save(pessoa);
         if(newPessoa == null) {
             return ResponseEntity.notFound().build();
@@ -97,7 +98,7 @@ public class PessoaResource {
 
     @Operation(summary = "Registrar contato", description = "Registra um novo contato vinculado ao id da pessoa passado como parâmetro de rota.")
     @PostMapping("/{id}/contatos")
-    public ResponseEntity<Contato> savePessoaContato(@RequestBody Contato contato, @PathVariable Long id){
+    public ResponseEntity<Contato> savePessoaContato(@Valid @RequestBody Contato contato, @PathVariable Long id){
         Optional<Pessoa> pessoa = pessoaService.getById(id);
 
         if (pessoa.isPresent()) {
